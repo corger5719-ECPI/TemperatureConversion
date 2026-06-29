@@ -1,0 +1,65 @@
+package com.example.pf_temperatureconversionapp
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.gpcustomizingicons.R
+
+// Cora Germany
+// GP Temperature Conversion App
+// June 28, 2026
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?)  {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        // add the icon to the Action Bar
+        val actionBar = supportActionBar
+        actionBar?.setIcon(R.mipmap.ic_launcher)
+        actionBar?.setDisplayUseLogoEnabled(true)
+        actionBar?.setDisplayShowHomeEnabled(true)
+
+        val txtTemperature = findViewById<EditText>(R.id.txtTemperature)
+        val txtResult = findViewById<TextView>(R.id.btnConvert)
+        val btnFtoC = findViewById<Button>(R.id.btnFtoC)
+        val btnCtoF = findViewById<Button>(R.id.btnCtoF)
+
+        btnFtoC.setOnClickListener {
+            val input = txtTemperature.text.toString()
+
+            if (input.isEmpty()) {
+                Toast.makeText(this, "Please enter a temperature", Toast.LENGTH_SHORT).show()
+            } else {
+                val fahrenheit = input.toDouble()
+
+                if (fahrenheit < -100 || fahrenheit > 250) {
+                    Toast.makeText(this, "Fahrenheit must be between -100 and 250", Toast.LENGTH_SHORT).show()
+                } else {
+                    val celsius = (fahrenheit - 32) * 5 / 9
+                    txtResult.text = "The temperature in Celsius is $celsius"
+                }
+            }
+        }
+
+        btnCtoF.setOnClickListener {
+            val input = txtTemperature.text.toString()
+
+            if (input.isEmpty()) {
+                Toast.makeText(this, "Please enter a temperature", Toast.LENGTH_SHORT).show()
+            } else {
+                val celsius = input.toDouble()
+
+                if (celsius < -75 || celsius > 125) {
+                    Toast.makeText(this, "Celsius must be between -75 and 125", Toast.LENGTH_SHORT).show()
+                } else {
+                    val fahrenheit = (celsius * 9 / 5) + 32
+                    txtResult.text = "The temperature in Fahrenheit is $fahrenheit"
+                }
+            }
+        }
+    }
+}
